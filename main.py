@@ -17,7 +17,6 @@ def get_mouse_now():
     x,y = pg.mouse.get_pos()
     return (x,y)
 
-
 # init pg and create window
 pg.init()
 # init sound mixer
