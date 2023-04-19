@@ -2,7 +2,7 @@
 
 ''' 
 My Goal: Power Ups
-Reach Goal: Double Jump
+Reach Goal: Collide with enemies
 '''
 import pygame as pg
 import os
@@ -72,11 +72,18 @@ class Game:
         if self.player.vel.y > 0:
             hits = pg.sprite.spritecollide(self.player, self.platforms, False)
             if hits:
-                if hits[0].variant == "disappearing":
+                # if the player hits this specific platform, the player will receive a boost into the air
+                if hits[0].variant == "boost":
+                    self.player.vel.y *= -1.5
+                    # once the player hits this platforrm it will disappear 
+                # if the player hits this specific platform, the player will be shot to the ground
+                elif hits[0].variant == "fake":
+                    self.player.vel.y *= 6
+                    # once the player hits this platforrm it will disappear 
                     hits[0].kill()
-                    self.player.vel.y *= -2
-                elif hits[0].variant == "boost":
-                    self.player.vel.y *= 10
+                elif hits[0].variant == "fake2":
+                    self.player.vel.y *= 6
+                    # once the player hits this platforrm it will disappear 
                     hits[0].kill()
                 elif hits[0].variant == "bouncey":
                     self.player.pos.y = hits[0].rect.top
@@ -100,6 +107,13 @@ class Game:
     def get_mouse_now(self):
         x,y = pg.mouse.get_pos()
         return (x,y)
+    def mob_collide(self):
+            hits = pg.sprite.spritecollide(self, self.enemies, True)
+            if hits:
+                self.enemies.remove()
+                print("you collided with an enemy...")
+                self.game.score += 1
+                print(SCORE)
 
 # instantiate the game class...
 g = Game()
