@@ -1,7 +1,7 @@
 # File created by Ben Pfaff
 
 ''' 
-My Goal: Power Ups
+My Goal: New Platforms
 Reach Goal: Collide with enemies
 '''
 import pygame as pg
@@ -45,10 +45,10 @@ class Game:
             p = Platform(*plat)
             self.all_sprites.add(p)
             self.platforms.add(p)
-        for i in range(0,10):
-            m = Mob(20,20,(0,255,0))
-            self.all_sprites.add(m)
-            self.enemies.add(m)
+        # for i in range(0,10):
+        #     m = Mob(20,20,(0,255,0))
+        #     self.all_sprites.add(m)
+        #     self.enemies.add(m)
         self.run()
     def run(self):
         self.playing = True
@@ -75,19 +75,23 @@ class Game:
                 # if the player hits this specific platform, the player will receive a boost into the air
                 if hits[0].variant == "boost":
                     self.player.vel.y *= -1.5
+                    self.player.image.fill((50,200,50))
                     # once the player hits this platforrm it will disappear 
                 # if the player hits this specific platform, the player will be shot to the ground
                 elif hits[0].variant == "fake":
                     self.player.vel.y *= 6
+                    self.player.image.fill(RED)
                     # once the player hits this platforrm it will disappear 
                     hits[0].kill()
                 elif hits[0].variant == "fake2":
                     self.player.vel.y *= 6
+                    self.player.image.fill(RED)
                     # once the player hits this platforrm it will disappear 
                     hits[0].kill()
                 elif hits[0].variant == "bouncey":
                     self.player.pos.y = hits[0].rect.top
                     self.player.vel.y = -PLAYER_JUMP
+                    self.player.image.fill(BLACK)
                 else:
                     self.player.pos.y = hits[0].rect.top
                     self.player.vel.y = 0
@@ -107,13 +111,13 @@ class Game:
     def get_mouse_now(self):
         x,y = pg.mouse.get_pos()
         return (x,y)
-    def mob_collide(self):
-            hits = pg.sprite.spritecollide(self, self.enemies, True)
-            if hits:
-                self.enemies.remove()
-                print("you collided with an enemy...")
-                self.game.score += 1
-                print(SCORE)
+    # def mob_collide(self):
+    #         hits = pg.sprite.spritecollide(self, self.enemies, True)
+    #         if hits:
+    #             self.enemies.remove()
+    #             print("you collided with an enemy...")
+    #             self.game.score += 1
+    #             print(SCORE)
 
 # instantiate the game class...
 g = Game()
